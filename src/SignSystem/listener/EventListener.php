@@ -24,6 +24,7 @@ class EventListener implements Listener {
                 $line = $block->getText()->getLine(2);
                 if ($sign->getFounder() == null || !isset(CloudBridge::$gameServer[$sign->getFounder()])) {
                     $player->sendMessage(SignSystem::getPrefix() . "§cNo free server found.");
+                    return;
                 }
 
                 $full = (CloudBridge::$gameServer[$sign->getFounder()]->getPlayerCount() >= CloudBridge::$gameServer[$sign->getFounder()]->getCloudGroup()->getMaxPlayer());
