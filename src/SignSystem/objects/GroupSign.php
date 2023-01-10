@@ -46,7 +46,7 @@ class GroupSign {
 
     public function getFormat()
     {
-        $format = Utils::$SignLayout["SignFormat"]["Offline"];
+        $format = Utils::$SignLayout["SignFormat"]["Lobby"];
         if (!isset(CloudBridge::$gameServer[$this->getFounder()])) {
             return Utils::$SignLayout["SignFormat"]["Offline"];
         }
@@ -59,13 +59,13 @@ class GroupSign {
             return Utils::$SignLayout["SignFormat"]["Offline"];
         }
 
-        if (CloudBridge::$gameServer[$this->getFounder()]->getCloudGroup()->isMaintenance()){
-            return Utils::$SignLayout["SignFormat"]["Maintenance"];
-        }
-
         $full = (CloudBridge::$gameServer[$this->getFounder()]->getPlayerCount() >= CloudBridge::$gameServer[$this->getFounder()]->getCloudGroup()->getMaxPlayer());
         if ($full){
             return Utils::$SignLayout["SignFormat"]["Full"];
+        }
+
+        if (CloudBridge::$gameServer[$this->getFounder()]->getCloudGroup()->isMaintenance()){
+            return Utils::$SignLayout["SignFormat"]["Maintenance"];
         }
 
         if (CloudBridge::$gameServer[$this->getFounder()]->getCloudGroup()->isBeta()){
