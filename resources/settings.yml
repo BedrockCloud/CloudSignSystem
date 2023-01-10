@@ -1,0 +1,3 @@
+#Set the default config path. ( default = plugin_data )
+#Example: "default_path: /home/your_path/"
+default_path: default

@@ -1,0 +1,9 @@
+name: CloudSignSystem
+version: 1.0.0
+api: ["4.0.0", "5.0.0"]
+main: SignSystem\SignSystem
+author: "BedrockCloud"
+
+permissions:
+  admin:
+    default: op
