@@ -4,10 +4,7 @@ namespace SignSystem\objects;
 
 use bedrockcloud\cloudbridge\CloudBridge;
 use bedrockcloud\cloudbridge\objects\GameServerState;
-use ceepkev77\lobbyapi\LobbyAPI;
 use pocketmine\world\Position;
-use pocketmine\world\World;
-use SignSystem\SignSystem;
 use SignSystem\utils\Utils;
 
 class GroupSign {
@@ -47,15 +44,23 @@ class GroupSign {
     public function getFormat()
     {
         $format = Utils::$SignLayout["SignFormat"]["Lobby"];
+
+        if (is_null($this->getFounder())) {
+            return Utils::$SignLayout["SignFormat"]["Offline"];
+        }
+
         if (!isset(CloudBridge::$gameServer[$this->getFounder()])) {
+            $this->setFounder(null);
             return Utils::$SignLayout["SignFormat"]["Offline"];
         }
 
         if (CloudBridge::$gameServer[$this->getFounder()]->getState() == GameServerState::INGAME || CloudBridge::$gameServer[$this->getFounder()]->getState() == GameServerState::NOT_REGISTERED){
+            $this->setFounder(null);
             return Utils::$SignLayout["SignFormat"]["Offline"];
         }
 
         if (!isset(CloudBridge::$gameServer[$this->getFounder()])) {
+            $this->setFounder(null);
             return Utils::$SignLayout["SignFormat"]["Offline"];
         }
 
