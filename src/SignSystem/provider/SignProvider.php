@@ -30,7 +30,7 @@ class SignProvider {
             $world = Server::getInstance()->getWorldManager()->getWorldByName($sign["levelName"]);
             $vector = Math::stringVectorToVector3($sign["position"]);
             if ($world === null) continue;
-            $this->signs[] = new GroupSign($sign["groupName"], new Position($vector->getX(), $vector->getY(), $vector->getZ(), $world), boolval($sign["maintenance"]));
+            $this->signs[] = new GroupSign($sign["groupName"], new Position($vector->getX(), $vector->getY(), $vector->getZ(), $world));
         }
         SignSystem::getInstance()->getScheduler()->scheduleRepeatingTask(new SignTask(), 20*Utils::$SignLayout["reload"]);
     }

@@ -18,7 +18,7 @@ class GroupSign {
     private NULL|String $founder;
     private int $currentFormatIndex = 0;
 
-    public function __construct(string $groupName, Position $position, bool $maintenance) {
+    public function __construct(string $groupName, Position $position, bool $maintenance=false) {
         $this->groupName = $groupName;
         $this->position = $position;
         $this->state = $maintenance ? self::MAINTENANCE : self::SEARCH;
