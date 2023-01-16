@@ -5,6 +5,7 @@ namespace SignSystem\objects;
 use bedrockcloud\cloudbridge\CloudBridge;
 use bedrockcloud\cloudbridge\objects\GameServerState;
 use pocketmine\world\Position;
+use SignSystem\provider\ServerProvider;
 use SignSystem\utils\Utils;
 
 class GroupSign {
@@ -50,16 +51,19 @@ class GroupSign {
         }
 
         if (!isset(CloudBridge::$gameServer[$this->getFounder()])) {
+            if (ServerProvider::isUsingServerName($this->getFounder())) ServerProvider::removeUsingServerName($this->getFounder());
             $this->setFounder(null);
             return Utils::$SignLayout["SignFormat"]["Offline"];
         }
 
         if (CloudBridge::$gameServer[$this->getFounder()]->getState() == GameServerState::INGAME || CloudBridge::$gameServer[$this->getFounder()]->getState() == GameServerState::NOT_REGISTERED){
+            if (ServerProvider::isUsingServerName($this->getFounder())) ServerProvider::removeUsingServerName($this->getFounder());
             $this->setFounder(null);
             return Utils::$SignLayout["SignFormat"]["Offline"];
         }
 
         if (!isset(CloudBridge::$gameServer[$this->getFounder()])) {
+            if (ServerProvider::isUsingServerName($this->getFounder())) ServerProvider::removeUsingServerName($this->getFounder());
             $this->setFounder(null);
             return Utils::$SignLayout["SignFormat"]["Offline"];
         }
@@ -84,7 +88,7 @@ class GroupSign {
         foreach ($formatIndex as $str) {
             if (is_array($str)) continue;
             $newFormatIndex[] = str_replace(
-                ["&", "%server%", "%players%", "%max_players%","%template%"],
+                ["&", "%server%", "%players%", "%max_players%", "%template%"],
                 [
                     "§",
                     ($this->getFounder() ?? $this->getGroupName()),
