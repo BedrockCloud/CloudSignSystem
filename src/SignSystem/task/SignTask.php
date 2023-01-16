@@ -10,6 +10,7 @@ use pocketmine\scheduler\Task;
 use SignSystem\objects\GroupSign;
 use SignSystem\provider\ServerProvider;
 use SignSystem\SignSystem;
+use SignSystem\utils\Utils;
 
 class SignTask extends Task {
 
@@ -19,7 +20,7 @@ class SignTask extends Task {
                 /** @var BaseSign $block */
                 if (($block = $sign->getPosition()->getWorld()->getBlock($sign->getPosition())) instanceof BaseSign) {
                     if ($sign->getFounder() !== null) {
-                        if (isset(CloudBridge::$gameServer[$sign->getFounder()])) {
+                        if (isset(CloudBridge::$gameServer[$sign->getFounder()]) && $sign->getFormat() != Utils::$SignLayout["SignFormat"]["Offline"]) {
                             if (in_array($sign->getFounder(), CloudBridge::$gameServer)) {
                                 if (!ServerProvider::isUsingServerName($sign->getFounder())) ServerProvider::addUsingServerName($sign->getFounder(), $sign);
                             } else {
@@ -50,7 +51,7 @@ class SignTask extends Task {
         foreach (CloudBridge::$gameServer as $serverName) {
             if (!str_starts_with($serverName->getName(), $groupName)) continue;
             if (!isset(CloudBridge::$gameServer[$serverName->getName()])) continue;
-            if (CloudBridge::$gameServer[$serverName->getName()]->getState() == GameServerState::INGAME) continue;
+            if (CloudBridge::$gameServer[$serverName->getName()]->getState() == GameServerState::INGAME || CloudBridge::$gameServer[$serverName->getName()]->getState() == GameServerState::NOT_REGISTERED) continue;
             if (!ServerProvider::isUsingServerName($serverName->getName())) {
                 $server = $serverName->getName();
             }

@@ -62,12 +62,6 @@ class GroupSign {
             return Utils::$SignLayout["SignFormat"]["Offline"];
         }
 
-        if (!isset(CloudBridge::$gameServer[$this->getFounder()])) {
-            if (ServerProvider::isUsingServerName($this->getFounder())) ServerProvider::removeUsingServerName($this->getFounder());
-            $this->setFounder(null);
-            return Utils::$SignLayout["SignFormat"]["Offline"];
-        }
-
         $full = (CloudBridge::$gameServer[$this->getFounder()]->getPlayerCount() >= CloudBridge::$gameServer[$this->getFounder()]->getCloudGroup()->getMaxPlayer());
         if ($full){
             return Utils::$SignLayout["SignFormat"]["Full"];
