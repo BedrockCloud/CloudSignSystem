@@ -1,0 +1,11 @@
+name: CloudSignSystem
+version: 1.0.0
+api: ["5.0.0"]
+main: SignSystem\SignSystem
+authors:
+  - "xxFLORII"
+  - "r3pt1s"
+
+permissions:
+  cloudsigns.admin:
+    default: op
